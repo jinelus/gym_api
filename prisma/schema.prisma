@@ -13,25 +13,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  password String
-  name     String
-  gymId    String @map("gym_id")
+enum Role {
+  ADMIN
+  MEMBER
+}
 
-  gyms Gym @relation(fields: [gymId], references: [id])
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  gymId     String   @map("gym_id")
+
+  gyms     Gym       @relation(fields: [gymId], references: [id])
+  checkIns CheckIn[]
 
   @@map("users")
 }
 
 model Gym {
-  id        String @id @default(uuid())
-  name      String
-  latitude  Float
-  longitude Float
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  phone       String?
+  latitude    Decimal
+  longitude   Decimal
 
-  users User[]
+  users    User[]
+  checkIns CheckIn[]
 
   @@map("gyms")
+}
+
+model CheckIn {
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now()) @map("created_at")
+  validateAt DateTime? @map("validate_at")
+  userId     String    @map("user_id")
+  gymId      String    @map("gym_id")
+
+  user User @relation(fields: [userId], references: [id])
+
+  gym Gym @relation(fields: [gymId], references: [id])
+
+  @@map("check_ins")
 }
