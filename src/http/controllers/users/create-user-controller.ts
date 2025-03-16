@@ -1,8 +1,8 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { PrismaUsersRepository } from "../../../repositories/prisma/prisma-users-repository";
-import { CreateUserUseCase } from "../../../uses-cases/create-user";
-import { UserAlreadyExistsError } from "../../../uses-cases/error/user-already-exists-error";
+import { UserAlreadyExistsError } from "@/uses-cases/error/user-already-exists-error";
+import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
+import { CreateUserUseCase } from "@/uses-cases/create-user";
 
 const UserSchema = z.object({
     name: z.string(),
