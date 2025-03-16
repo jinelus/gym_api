@@ -22,7 +22,7 @@ export class PrismaUsersRepository implements UsersRepository {
         name,
         password
     }: Prisma.UserUncheckedCreateInput) {
-        await prisma.user.create({
+        const user = await prisma.user.create({
             data: {
                 name,
                 email,
@@ -30,6 +30,8 @@ export class PrismaUsersRepository implements UsersRepository {
                 gymId
             }
         })
+
+        return user
     }
 
     async findUserByEmail(email: string) {
