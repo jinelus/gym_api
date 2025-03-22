@@ -1,6 +1,7 @@
 import type { Prisma, User } from "@prisma/client";
 import type { UsersRepository } from "../interfaces/users-repository";
 import { randomUUID } from "node:crypto";
+import type { EditUserUseCaseProps } from "@/uses-cases/edit-user";
 
 export class InMemoryUsersRepository implements UsersRepository {
     public users: User[] = []
@@ -32,5 +33,20 @@ export class InMemoryUsersRepository implements UsersRepository {
         return user ?? null
     }
     
+    async update({ email, gymId, name, userId}: EditUserUseCaseProps) {
+        const userIndex = this.users.findIndex(user => user.id === userId)
+        const editedUser = {
+            name,
+            email,
+            gymId
+        }
+
+        this.users[userIndex] = {
+            ...this.users[userIndex],
+            ...editedUser
+        }
+
+        return this.users[userIndex]
+    }
     
 }
