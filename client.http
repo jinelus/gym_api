@@ -1,0 +1,45 @@
+
+@baseUrl = http://localhost:3333
+@authToken = {{authenticate.response.body.token}}
+
+# @name create_account
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+    "name": "Benlove",
+    "email": "benlove56@gmail.com",
+    "password": "123456",
+    "gymId": "gym_01"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/session
+Content-Type: application/json
+
+{
+    "email": "john@gmail.com",
+    "password": "123456"
+}
+
+###
+
+# @name edit_user
+PUT {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "John Doe",
+    "email": "john@gmail.com",
+    "gymId": "gym_01"
+}
+
+###
+
+# @name get_user_by_id
+GET {{baseUrl}}/users/66f78d93-9bf1-430a-b72a-36f9b5b0e7d5
+
+Content-Type: application/json
