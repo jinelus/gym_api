@@ -1,12 +1,28 @@
 import fastify from "fastify";
-import { usersRouter } from "./http/routes/user";
+import { usersRoutes } from "./http/routes/user";
+import fastifyJwt from "@fastify/jwt";
+import { authenticateRoutes } from "./http/routes/authenticate.route";
+import fastifyCookie from "@fastify/cookie";
+import { env } from "./config/env";
 
 const app = fastify()
 
-app.register(usersRouter)
+app.register(fastifyJwt, {
+    secret: env.SECRET_JWT_KEY,
+    cookie: {
+        cookieName: 'refreshToken',
+        signed: false
+    },
+    sign: { expiresIn: '10m' }
+})
+
+app.register(fastifyCookie)
+
+app.register(usersRoutes)
+app.register(authenticateRoutes)
 
 app.listen({
-    port: 3333
+    port: env.PORT
 })
 .then(() => {
     console.log("✅ HTTP server running on http://localhost:3333")
