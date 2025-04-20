@@ -1,24 +1,27 @@
-import { PrismaClient } from "@prisma/client";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { prisma } from "../../../lib/prisma";
+import { CreateGymUseCase } from "@/uses-cases/gyms/create-gym";
+import { PrismaGymsRepository } from "@/repositories/prisma/prisma-gyms-repository";
 
 const gymSchema = z.object({
     name: z.string(),
+    description: z.string().optional(),
+    phone: z.string().optional(),
     latitude: z.number(),
     longitude: z.number()
 })
 
-export const gymController = async (request: FastifyRequest, reply: FastifyReply) => {
-    const { latitude, longitude, name} = gymSchema.parse(request.body)
+export const createGymController = async (request: FastifyRequest, reply: FastifyReply) => {
+    const { latitude, longitude, name, description, phone } = gymSchema.parse(request.body)
 
-    await prisma.gym.create({
-        data: {
-            name,
-            latitude,
-            longitude
-        }
-    })
+    const prismaGymsRepository = new PrismaGymsRepository()
+    const createGymUseCase = new CreateGymUseCase(prismaGymsRepository)
 
-    return reply.status(201).send()
+    try {
+        await createGymUseCase.execute({ name, latitude, longitude, description, phone })
+    
+        return reply.status(201).send()
+    } catch (error) {
+        return reply.status(500).send({ message: error })
+    }
 }
