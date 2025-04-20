@@ -1,7 +1,7 @@
 import { compare } from 'bcryptjs'
-import type { UsersRepository } from "../repositories/interfaces/users-repository"
+import type { UsersRepository } from "../../repositories/interfaces/users-repository"
 import type { User } from '@prisma/client'
-import { CredentialError } from './error/credential-error'
+import { CredentialError } from '../error/credential-error'
 
 interface AuthenticateProps {
     email: string

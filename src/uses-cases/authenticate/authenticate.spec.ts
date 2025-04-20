@@ -1,9 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { compare, hash } from 'bcryptjs'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { UserAlreadyExistsError } from './error/user-already-exists-error'
 import { AuthenticateUseCase } from './authenticate'
-import { CredentialError } from './error/credential-error'
+import { CredentialError } from '../error/credential-error'
 
 describe('Authenticate use case', () => {
     let inMemoryUsersRepository: InMemoryUsersRepository
