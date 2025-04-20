@@ -1,7 +1,7 @@
 import type { Prisma, User } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 import type { UsersRepository } from "../interfaces/users-repository";
-import type { EditUserUseCaseProps } from "@/uses-cases/edit-user";
+import { EditUserUseCaseProps } from "@/uses-cases/user/edit-user";
 
 export class PrismaUsersRepository implements UsersRepository {
     async findById(id: string): Promise<User | null> {
@@ -62,5 +62,13 @@ export class PrismaUsersRepository implements UsersRepository {
         })
 
         return user
+    }
+
+    async delete(userId: string): Promise<void> {
+        await prisma.user.delete({
+            where: {
+                id: userId
+            }
+        })
     }
 }

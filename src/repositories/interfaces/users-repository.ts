@@ -6,4 +6,5 @@ export interface UsersRepository {
     findUserByEmail(email: string): Promise<User | null>
     findById(id: string): Promise<User | null>
     update(user: EditUserUseCaseProps): Promise<User>
+    delete(userId: string): Promise<void>
 }
