@@ -3,7 +3,7 @@ import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-
 import { FetchGymsByNameUseCase } from './fetch-gyms-by-name'
 
 
-describe('Create gym use case', () => {
+describe('Fetch gyms by name use case', () => {
     let inMemoryGymsRepository: InMemoryGymsRepository
     let sut: FetchGymsByNameUseCase
 
@@ -12,7 +12,7 @@ describe('Create gym use case', () => {
         sut = new FetchGymsByNameUseCase(inMemoryGymsRepository)
     })
 
-    it('should be able to hash password', async () => {
+    it('should be able to fetch gyms by name', async () => {
 
         await inMemoryGymsRepository.create({
             name: 'Power Gym',

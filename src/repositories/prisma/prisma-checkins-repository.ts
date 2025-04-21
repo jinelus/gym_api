@@ -57,5 +57,14 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
         return checkins
     }
     
+    async save(checkIn: CheckIn): Promise<void> {
+        await prisma.checkIn.update({
+            where: {
+                id: checkIn.id,
+            },
+            data: checkIn,
+        })
+    }
+
 
 }

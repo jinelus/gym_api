@@ -5,7 +5,7 @@ import { authenticateRoutes } from "./http/routes/authenticate.route";
 import fastifyCookie from "@fastify/cookie";
 import { env } from "./config/env";
 
-const app = fastify()
+export const app = fastify()
 
 app.register(fastifyJwt, {
     secret: env.SECRET_JWT_KEY,

@@ -10,4 +10,5 @@ export interface CheckInsRepository {
     findAllByUserId(userId: string, { page }: PaginationParams): Promise<CheckIn[]>
     findById(checkInId: string): Promise<CheckIn | null>
     delete(checkInId: string): Promise<void>
+    save(checkIn: CheckIn): Promise<void>
 }

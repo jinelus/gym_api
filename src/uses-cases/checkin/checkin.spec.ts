@@ -37,7 +37,9 @@ describe('Checkin use case', () => {
 
         const response = await sut.execute({
             userId: 'user_01',
-            gymId: 'gym_01'
+            gymId: 'gym_01',
+            userLatitude: -23.5505,
+            userLongitude: -46.6333,
         })
 
         expect(response).toEqual(expect.objectContaining({
@@ -62,7 +64,9 @@ describe('Checkin use case', () => {
 
         await sut.execute({
             userId: 'user_01',
-            gymId: 'gym_01'
+            gymId: 'gym_01',
+            userLatitude: -23.5505,
+            userLongitude: -46.6333,
         })
 
         vi.setSystemTime(new Date(2025, 3, 19, 13, 0, 1))
@@ -70,7 +74,9 @@ describe('Checkin use case', () => {
         await expect(() => (
             sut.execute({
                 userId: 'user_01',
-                gymId: 'gym_01'
+                gymId: 'gym_01',
+                userLatitude: -23.5505,
+                userLongitude: -46.6333,
             })
         )).rejects.toBeInstanceOf(CheckInAlreadyExistsError)     
     })
